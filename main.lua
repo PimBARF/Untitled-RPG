@@ -1,6 +1,7 @@
 -- main.lua
 -- Import external files
 local bump = require("lib.bump")
+local camera = require("camera")
 local player = require("player")
 
 local world
@@ -21,12 +22,20 @@ end
 -- Update
 function love.update(dt)
     player:update(dt)
+
+    -- Set the camera target to the player
+    camera:setTarget(player.x, player.y)
 end
 
 -- Draw the graphics
 function love.draw()
-    player:draw()
+    -- Apply camera
+    camera:apply()
+        -- Draw the world and everything inside
+        player:draw() -- Draw player object
+        love.graphics.rectangle("line", 500, 200, 100, 100) -- Draw test wall
+    -- Detach camera
+    camera:detach()
 
-    -- Draw the test wall
-    love.graphics.rectangle("line", 500, 200, 100, 100)
+    -- Draw UI elements here --
 end
