@@ -21,6 +21,12 @@ function player:load(world)
     self.width = 32
     self.height = 32
     self.speed = 300
+    self.maxhealth = 100
+    self.health = self.maxhealth
+    self.maxstamina = 100
+    self.stamina = self.maxstamina
+    self.maxmana = 100
+    self.mana = self.maxmana
 
     -- Register the player in the world
     self.world:add(self, self.x, self.y, self.width, self.height)
@@ -54,6 +60,7 @@ end
 
 -- Drawing
 function player:draw()
+    love.graphics.setColor(255,255,255)
     love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
 end
 
