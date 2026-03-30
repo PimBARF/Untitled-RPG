@@ -14,12 +14,16 @@ local function normalize(dx, dy)
 end
 
 -- Initializing variables
-function player:load()
+function player:load(world)
+    self.world = world
     self.x = 400
     self.y = 300
     self.width = 32
     self.height = 32
     self.speed = 300
+
+    -- Register the player in the world
+    self.world:add(self, self.x, self.y, self.width, self.height)
 end
 
 -- Movement logic
@@ -33,10 +37,19 @@ function player:update(dt)
     if love.keyboard.isDown("left") then dx = -1 end
     if love.keyboard.isDown("right") then dx = 1 end
 
-    -- Normalize vectors and move player
+    -- Normalize vectors
     local nx, ny = normalize(dx, dy)
-    self.x = self.x + (nx * (self.speed * dt))
-    self.y = self.y + (ny * (self.speed * dt))
+
+    -- Calculate intended movement
+    local goalX = self.x + (nx * (self.speed * dt))
+    local goalY = self.y + (ny * (self.speed * dt))
+
+    -- Try to move the player using bump
+    local actualX, actualY, cols, len = self.world:move(self, goalX, goalY)
+
+    -- Move player object
+    self.x = actualX
+    self.y = actualY
 end
 
 -- Drawing

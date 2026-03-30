@@ -8,7 +8,7 @@ function love.conf(t)
     t.window.vsync = 1
 
     -- GAME IDENTITY
-    t.identity = "RPG" -- Change this later to final name
+    t.identity = "Untitled RPG" -- Change this later to final name
 
     -- MISC
     t.console = true
